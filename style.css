@@ -74,7 +74,7 @@ nav a:hover {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://static.time.com/v3/assets/bltea6093859af6183b/blt4f7303e8baedd669/698a01610116820ec197e0c7/coachella-crowd.jpg?branch=production&width=750&quality=75&auto=webp&crop=3:2') no-repeat center center/cover;
+    background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://festbeat.com/wp-content/uploads/2025/04/cochella_concert_indio_desert_california.jpg') no-repeat center center/cover;
     color: #ffffff;
     text-align: center;
     padding: 120px 0;
