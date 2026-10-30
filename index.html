@@ -1,101 +1,386 @@
-<!DOCTYPE html>
-<html lang="en">
+CTYPE html>
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENCORE! TRADING COMPANY </title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts -->
+    <title>NOIZY'S | Collectible Musician Trading Cards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;1,800&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            purple: '#8B5CF6',
+                            neonPink: '#FF007A',
+                            neonCyan: '#00F0FF',
+                            neonLime: '#CCFF00',
+                            darkBg: '#09090B',
+                            cardBg: '#121218'
+                        }
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 3s infinite alternate',
+                        'float': 'float 6s ease-in-out infinite',
+                        'shimmer': 'shimmer 2.5s infinite linear',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%': { filter: 'drop-shadow(0 0 15px rgba(255, 0, 122, 0.4))' },
+                            '100%': { filter: 'drop-shadow(0 0 30px rgba(0, 240, 255, 0.7))' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-12px) rotate(2deg)' }
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Holographic overlay effect on card hover */
+        .holo-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+        }
+        .holo-card::before {
+            content: "";
+            position: absolute; 
+            inset: -100%;
+            background: linear-gradient(
+                115deg,
+                transparent 20%,
+                rgba(255, 0, 122, 0.25) 40%,
+                rgba(0, 240, 255, 0.3) 50%,
+                rgba(204, 255, 0, 0.2) 60%,
+                transparent 80%
+            );
+            transform: rotate(-15deg);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .holo-card:hover::before {
+            opacity: 1;
+            animation: shimmer 2s infinite linear;
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #FF007A 0%, #8B5CF6 50%, #00F0FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+    </style>
 </head>
-<body>
+<body class="bg-brand-darkBg text-slate-100 font-sans antialiased min-h-screen selection:bg-brand-neonPink selection:text-white relative overflow-x-hidden bg-grid-pattern">
 
-    <!-- Header & Navigation -->
-    <header>
-        <div class="container nav-container">
-            <a href="#" class="logo">NOIZYs TRADING CARDS</span></a>
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#shop">Shop</a></li>
-                    <li><a href="#sell">Sell Your Cards</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+    <!-- Ambient Glow Background -->
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-r from-brand-neonPink/20 via-brand-purple/20 to-brand-neonCyan/20 blur-[120px] pointer-events-none rounded-full z-0"></div>
+
+    <!-- Navigation Header -->
+    <header class="relative z-20 container mx-auto px-6 py-6 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-neonPink to-brand-neonCyan p-[2px] shadow-lg shadow-brand-neonPink/20">
+                <div class="w-full h-full bg-brand-darkBg rounded-[10px] flex items-center justify-center">
+                    <i data-lucide="zap" class="w-5 h-5 text-brand-neonCyan fill-brand-neonCyan"></i>
+                </div>
+            </div>
+            <span class="font-display font-black text-2xl tracking-wider text-white">NOIZY<span class="text-brand-neonPink">'S</span></span>
+        </div>
+        <div>
+            <a href="#preorder" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/10 transition-all duration-300 backdrop-blur-md hover:border-brand-neonCyan/50">
+                <i data-lucide="sparkles" class="w-4 h-4 text-brand-neonCyan"></i>
+                Get Early Access
+            </a>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container hero-content">
-            <h1>WE TAKE MUSIC SERIOUSLY.</h1>
-            <p>The only music trading card. Buy, sell, trade and redeem!</p>
-            <a href="#shop" class="btn">PRE-ORDER</a>
+    <section class="relative z-10 container mx-auto px-6 pt-10 pb-20 md:pt-16 md:pb-28 text-center flex flex-col items-center">
+        <!-- Tagline Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 animate-fade-in">
+            <span class="flex h-2 w-2 rounded-full bg-brand-neonLime animate-ping"></span>
+            <span class="text-xs md:text-sm font-medium tracking-wide text-slate-300 uppercase"> Volume 1 Drop Coming Soon</span>
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="font-display font-black text-4xl sm:text-6xl lg:text-7xl tracking-tight max-w-4xl uppercase leading-[1.08] mb-6">
+            For The Culture. <br>
+            <span class="text-gradient">Collect the Legends.</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-slate-400 text-lg sm:text-xl max-w-2xl font-normal leading-relaxed mb-10">
+            Premium physical trading cards celebrating underground icons, chart-topping disruptors, and legendary audio pioneers. Authenticated and rare. 
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+            <a href="#preorder" class="w-full sm:w-auto px-8 py-4 rounded-xl font-display font-bold text-lg text-slate-950 bg-gradient-to-r from-brand-neonCyan via-brand-neonLime to-brand-neonCyan bg-[length:200%_auto] hover:bg-right transition-all duration-500 shadow-lg shadow-brand-neonCyan/25 hover:shadow-brand-neonCyan/40 hover:scale-[1.02] flex items-center justify-center gap-2">
+                <i data-lucide="ticket" class="w-5 h-5"></i>
+                PRE-ORDER NOW
+            </a>
+            <a href="#cards" class="w-full sm:w-auto px-8 py-4 rounded-xl font-display font-bold text-lg text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300 flex items-center justify-center gap-2">
+                <i data-lucide="eye" class="w-5 h-5 text-slate-400"></i>
+                Explore Cards
+            </a>
         </div>
     </section>
 
-    <!-- Shop Categories / Featured Inventory -->
-    <section id="shop" class="section">
-        <div class="container">
-            <h2 class="section-title">Upcoming Releases</h2>
-            <div class="grid">
+    <!-- Cards Showcase Gallery -->
+    <section id="cards" class="relative z-10 py-16 bg-gradient-to-b from-transparent via-brand-cardBg/40 to-transparent">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-14">
+                <h2 class="font-display font-bold text-2xl sm:text-4xl text-white tracking-wide uppercase mb-3">Featured Cards</h2>
+                <p class="text-slate-400 max-w-xl mx-auto">Check out the featured cards list for more information on new releases, redemptions, the memorabilia authentication process, and much more.</p>
+            </div>
+
+            <!-- Card Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 <!-- Card 1 -->
-                <div class="card">
-                    <img src= "https://64.media.tumblr.com/f873d1c077be4bb15620bb0a9816c228/317cb21d500f90cd-ed/s540x810/9f141833132afd0b5fcba30e72aa824684c7b66b.jpg" alt="Charizard Card">
-                    <div class="card-body">
-                        <span class="badge">Music</span>
-                        <h3>Hip Hop R&B Vol 1</h3>
-                        <p class="price">$49.99</p>
-                        <button class="btn-sm" onclick="alert('Added to cart!')">Add to Cart</button>
+                <div class="holo-card rounded-2xl bg-slate-900/90 border border-white/10 p-4 shadow-2xl hover:border-brand-neonPink/50 hover:shadow-brand-neonPink/20 transition-all duration-300 flex flex-col group">
+                    <div class="relative aspect-[3/4] w-full rounded-xl overflow-hidden mb-4 bg-slate-950 flex items-center justify-center border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80" alt="Soundwave Pioneer" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" />
+                        <div class="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md border border-brand-neonPink/50 text-brand-neonPink text-xs font-bold tracking-widest uppercase">
+                            FOIL #01
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 flex justify-between items-end">
+                            <div>
+                                <span class="text-xs uppercase tracking-wider text-slate-300 font-semibold block">Class</span>
+                                <span class="text-sm font-display font-bold text-white">Synth Wizard</span>
+                            </div>
+                            <span class="text-xs font-bold px-2 py-0.5 rounded bg-brand-neonPink text-white">99 RARITY</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-display font-bold text-xl text-white">HIP HOP R&B</h3>
+                        <span class="text-xs font-mono text-slate-400">#004/100</span>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-4 line-clamp-2">A classic mix of hip hop + r&b legends, venue cards, underground artists, and up and comers.</p>
+                    <div class="mt-auto grid grid-cols-3 gap-2 pt-3 border-t border-white/10 text-center font-mono text-xs">
+                        <div class="bg-white/5 py-1.5 rounded"><span class="block text-slate-400 text-[10px]">FLOW</span><span class="font-bold text-brand-neonCyan">98</span></div>
+                        <div class="bg-white/5 py-1.5 rounded"><span class="block text-slate-400 text-[10px]">STAGE</span><span class="font-bold text-brand-neonPink">94</span></div>
+                        <div class="bg-white/5 py-1.5 rounded"><span class="block text-slate-400 text-[10px]">BEAT</span><span class="font-bold text-brand-neonLime">99</span></div>
                     </div>
                 </div>
-                <!-- Card 2 -->
-                <div class="card">
-                    <img src="https://64.media.tumblr.com/3e79155cb02399b65f0765f69c214bea/317cb21d500f90cd-b6/s540x810/60c72094ece526f8f02dd781ac74ed88b9e398d8.jpg" alt="MTG Card">
-                    <div class="card-body">
-                        <span class="badge">Music</span>
-                        <h3>K POP EDM HOUSE Vol. 1</h3>
-                        <p class="price">$49.99</p>
-                        <button class="btn-sm" onclick="alert('Added to cart!')">Add to Cart</button>
+
+                <!-- Card 2 (Featured Main) -->
+                <div class="holo-card rounded-2xl bg-slate-900/90 border border-brand-neonCyan/40 p-4 shadow-2xl hover:border-brand-neonCyan hover:shadow-brand-neonCyan/30 transition-all duration-300 flex flex-col group md:-translate-y-4">
+                    <div class="relative aspect-[3/4] w-full rounded-xl overflow-hidden mb-4 bg-slate-950 flex items-center justify-center border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80" alt="Lead Vocalist Card" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" />
+                        <div class="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md border border-brand-neonCyan/50 text-brand-neonCyan text-xs font-bold tracking-widest uppercase">
+                            ULTRA RARE
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 flex justify-between items-end">
+                            <div>
+                                <span class="text-xs uppercase tracking-wider text-slate-300 font-semibold block">Class</span>
+                                <span class="text-sm font-display font-bold text-white">Vocal Icon</span>
+                            </div>
+                            <span class="text-xs font-bold px-2 py-0.5 rounded bg-brand-neonCyan text-slate-950">100 RARITY</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-display font-bold text-xl text-white">ROCK ALT EDM POP</h3>
+                        <span class="text-xs font-mono text-slate-400">#001/050</span>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-4 line-clamp-2">Modern and classic rock, punk, alt, house music, venue cards and more!</p>
+                    <div class="mt-auto grid grid-cols-3 gap-2 pt-3 border-t border-white/10 text-center font-mono text-xs">
+                        <div class="bg-white/5 py-1.5 rounded"><span class="block text-slate-400 text-[10px]">FLOW</span><span class="font-bold text-brand-neonCyan">100</span></div>
+                        <div class="bg-white/5 py-1.5 rounded"><span class="block text-slate-400 text-[10px]">STAGE</span><span class="font-bold text-brand-neonPink">99</span></div>
+                        <div class="bg-white/5 py-1.5 rounded"><span class="block text-slate-400 text-[10px]">BEAT</span><span class="font-bold text-brand-neonLime">96</span></div>
                     </div>
                 </div>
+
                 <!-- Card 3 -->
-                <div class="card">
-                    <img src="https://64.media.tumblr.com/99ec244011d4eadb938ecddf5806acf1/17978235545a99bf-d6/s1280x1920/ad6fe6c3c4d36d86f64a801ba6a1df132f0228ed.jpg" alt="Yu-Gi-Oh Card">
-                    <div class="card-body">
-                        <span class="badge">Music</span>
-                        <h3>ROCK PUNK ALT Vol. 1</h3>
-                        <p class="price">$49.99</p>
-                        <button class="btn-sm" onclick="alert('Added to cart!')">Add to Cart</button>
+                <div class="holo-card rounded-2xl bg-slate-900/90 border border-white/10 p-4 shadow-2xl hover:border-brand-neonLime/50 hover:shadow-brand-neonLime/20 transition-all duration-300 flex flex-col group">
+                    <div class="relative aspect-[3/4] w-full rounded-xl overflow-hidden mb-4 bg-slate-950 flex items-center justify-center border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=600&q=80" alt="DJ Producer Card" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100" />
+                        <div class="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md border border-brand-neonLime/50 text-brand-neonLime text-xs font-bold tracking-widest uppercase">
+                            FOIL #02
+                        </div>
+                        <div class="absolute bottom-3 left-3 right-3 flex justify-between items-end">
+                            <div>
+                                <span class="text-xs uppercase tracking-wider text-slate-300 font-semibold block">Class</span>
+                                <span class="text-sm font-display font-bold text-white">Bass Architect</span>
+                            </div>
+                            <span class="text-xs font-bold px-2 py-0.5 rounded bg-brand-neonLime text-slate-950">97 RARITY</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-display font-bold text-xl text-white">COUNTRY</h3>
+                        <span class="text-xs font-mono text-slate-400">#012/100</span>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-4 line-clamp-2">Pioneer of heavy sub-frequencies and rhythmic festival drops.</p>
+                    <div class="mt-auto grid grid-cols-3 gap-2 pt-3 border-t border-white/10 text-center font-mono text-xs">
+                        <div class="bg-white/5 py-1.5 rounded"><span class="block text-slate-400 text-[10px]">FLOW</span><span class="font-bold text-brand-neonCyan">92</span></div>
+                        <div class="bg-white/5 py-1.5 rounded"><span class="block text-slate-400 text-[10px]">STAGE</span><span class="font-bold text-brand-neonPink">96</span></div>
+                        <div class="bg-white/5 py-1.5 rounded"><span class="block text-slate-400 text-[10px]">BEAT</span><span class="font-bold text-brand-neonLime">100</span></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sell/Trade Section -->
-    <section id="sell" class="section bg-light">
-        <div class="container sell-container">
-            <h2 class="section-title">Want to Sell or Trade?</h2>
-            <p>We offer top dollar for raw and graded cards. Send us a list or photos of your collection for a fast, no-obligation cash or trade offer.</p>
-            <form class="contact-form" onsubmit="event.preventDefault(); alert('Thank you! Your trade submission has been sent.');">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea rows="4" placeholder="List your cards or describe your collection..." required></textarea>
-                <button type="submit" class="btn">Get an Offer</button>
-            </form>
+    <!-- Why NOIZY's Feature Highlights -->
+    <section class="py-20 relative z-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-colors">
+                    <div class="w-12 h-12 rounded-xl bg-brand-neonPink/10 text-brand-neonPink flex items-center justify-center mb-6">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-white mb-3">NFC Authenticated</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">Every card comes equipped with an embedded NFC chip to verify physical ownership, access your digital collection, and unlock digital content.</p>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-colors">
+                    <div class="w-12 h-12 rounded-xl bg-brand-neonCyan/10 text-brand-neonCyan flex items-center justify-center mb-6">
+                        <i data-lucide="layers" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-white mb-3">Premium Heavy Stock</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">Printed on 35pt weighted cardstock with rainbow prismatic foils, spot UV gloss, and matte soft-touch finish.</p>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-colors">
+                    <div class="w-12 h-12 rounded-xl bg-brand-neonLime/10 text-brand-neonLime flex items-center justify-center mb-6">
+                        <i data-lucide="music" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-white mb-3">Exclusive Audio Perks</h3>
+                    <p class="text-slate-400 leading-relaxed text-sm">Tap your card on your smartphone to instantly access stream unreleased tracks, artist merchandise, and VIP concert passes.</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container footer-content">
-            <p>&copy; 2026 THE NOIZY TRADING CARD COMPANY™. All rights reserved.</p>
-            <p>P.O BOX 653207, San Diego, CA | Email: help@noizys.com</p>
+    <!-- Pre-Order Section / Email Signup Form -->
+    <section id="preorder" class="relative z-10 py-20 px-6">
+        <div class="max-w-4xl mx-auto rounded-3xl bg-gradient-to-br from-slate-900 via-slate-950 to-brand-darkBg border border-white/10 p-8 sm:p-14 relative overflow-hidden shadow-2xl">
+            <!-- Neon glow effects -->
+            <div class="absolute -top-24 -right-24 w-64 h-64 bg-brand-neonPink/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-brand-neonCyan/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 text-center max-w-2xl mx-auto">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-neonPink/10 text-brand-neonPink text-xs font-semibold mb-6 uppercase tracking-wider">
+                    <i data-lucide="zap" class="w-3.5 h-3.5"></i> Volume 1 VIP Queue
+                </div>
+
+                <h2 class="font-display font-black text-3xl sm:text-5xl text-white mb-4 uppercase">
+                    JOIN THE PRE-ORDER WAITLIST
+                </h2>
+
+                <p class="text-slate-400 text-base sm:text-lg mb-8">
+                    Be the first in line for our limited Founder Edition packs. Subscribers receive guaranteed early access and 1 exclusive holographic bonus card!
+                </p>
+
+                <!-- Interactive Email Form -->
+                <form id="signup-form" onsubmit="handleFormSubmit(event)" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                    <div class="relative flex-1">
+                        <i data-lucide="mail" class="w-5 h-5 text-slate-500 absolute left-4 top-1/2 -translate-y-1/2"></i>
+                        <input 
+                            type="email" 
+                            id="email-input" 
+                            required 
+                            placeholder="Enter your email address..." 
+                            class="w-full bg-slate-900/90 border border-white/15 focus:border-brand-neonCyan rounded-xl py-4 pl-12 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-neonCyan/20 transition-all"
+                        >
+                    </div>
+                    <button 
+                        type="submit" 
+                        id="submit-btn" 
+                        class="px-8 py-4 rounded-xl font-display font-bold text-slate-950 bg-gradient-to-r from-brand-neonCyan to-brand-neonLime hover:opacity-95 transition-all duration-300 shadow-lg shadow-brand-neonCyan/20 flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                        <span>RESERVE SPOT</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                </form>
+
+                <!-- Success Confirmation Message (Initially hidden) -->
+                <div id="success-message" class="hidden mt-6 p-4 rounded-xl bg-brand-neonLime/10 border border-brand-neonLime/30 text-brand-neonLime flex items-center justify-center gap-3">
+                    <i data-lucide="check-circle-2" class="w-5 h-5 flex-shrink-0"></i>
+                    <span class="font-semibold text-sm">You're on the VIP list! Check your inbox soon for early drop access.</span>
+                </div>
+
+                <p class="text-slate-500 text-xs mt-4">No spam. Unsubscribe anytime with a single click.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simple Footer -->
+    <footer class="relative z-10 border-t border-white/5 py-10 text-center text-slate-500 text-sm">
+        <div class="container mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <span class="font-display font-bold text-white tracking-wider">NOIZY'S</span>
+                <span>— Collectible Musician Cards</span>
+            </div>
+            <p>&copy; 2026 NOIZY'S Trading Card Co. All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- Interactive Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Handle Email Form Submission
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const emailInput = document.getElementById('email-input');
+            const submitBtn = document.getElementById('submit-btn');
+            const successMsg = document.getElementById('success-message');
+
+            if (!emailInput.value) return;
+
+            // Animate Button to Loading State
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <svg class="animate-spin h-5 w-5 text-slate-950" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>RESERVING...</span>
+            `;
+
+            // Simulate Network Request Delay
+            setTimeout(() => {
+                // Show Success Message
+                successMsg.classList.remove('hidden');
+                
+                // Reset Form
+                emailInput.value = '';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `
+                    <span>RESERVED!</span>
+                    <i data-lucide="check" class="w-5 h-5"></i>
+                `;
+                
+                // Re-initialize Lucide Icons for new DOM element
+                lucide.createIcons();
+
+                // Store in LocalStorage as mock backup
+                console.log("Pre-order registration stored.");
+            }, 1200);
+        }
+    </script>
 </body>
 </html>
